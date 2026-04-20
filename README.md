@@ -1,7 +1,7 @@
 # Cyber Investigation Lab
 This repository contains my digital forensics and security automation projects.
 
-## Project 1: Python Security Log Scanner A custom script designed to parse system logs for ***Indicators of Compromise (IoC)***.
+## Project 1: Python Security Log Scanner a custom script designed to parse system logs for ***Indicators of Compromise (IoC)***.
 
 ### Tools Used:
 * **Python**: For automated log analysis .
