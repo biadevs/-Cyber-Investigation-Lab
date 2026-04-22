@@ -1,14 +1,23 @@
-# Day 2: The Automated Evidence Scanner 
+import requests
 
-file_path = "server_logs.txt"
+def get_location(ip):
+    # We use http (not https) for this specific free API to avoid SSL errors
+    url = f"http://ip-api.com/json/{ip}"
+    response = requests.get(url)
+    data = response.json()
+    
+    # This checks if the API actually found the IP
+    if data.get("status") == "success":
+        return f"{data['city']}, {data['country']}"
+    else:
+        # If it fails, this will tell us WHY (e.g., 'reserved range' or 'invalid query')
+        return f"Error: {data.get('message', 'Unknown Error')}"
 
-print(f"---Scanning Evidence File:{file_path }---")
+# Use a definitely public IP for the test
+test_ip = "1.1.1.1"
 
-with open(file_path,"r") as evidence:
-  for line in evidence:
-   #.strip()to clean up extra spaces 
-    clean_line = line.strip()
-
-    if"CRITICAL" in clean_line or "ALERT" in clean_line:
-                                                    print(f"[!]THREAT DETECTED:{clean_line}")
-  print("---Investifation Complete---")                                              
+print(f"--- Global Trace Initiated ---")
+location = get_location(test_ip)
+print(f"Target IP: {test_ip}")
+print(f"Result: {location}")
+print(f"--- Trace Complete ---")
