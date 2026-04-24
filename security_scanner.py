@@ -1,23 +1,30 @@
 import requests
 
 def get_location(ip):
-    # We use http (not https) for this specific free API to avoid SSL errors
     url = f"http://ip-api.com/json/{ip}"
-    response = requests.get(url)
-    data = response.json()
-    
-    # This checks if the API actually found the IP
-    if data.get("status") == "success":
-        return f"{data['city']}, {data['country']}"
-    else:
-        # If it fails, this will tell us WHY (e.g., 'reserved range' or 'invalid query')
-        return f"Error: {data.get('message', 'Unknown Error')}"
+    try:
+        response = requests.get(url)
+        data = response.json()
+        if data.get("status") == "success":
+            return f"{data['city']}, {data['country']}"
+        else:
+            return "Private/Internal IP"
+    except:
+        return "Connection Error"
 
-# Use a definitely public IP for the test
-test_ip = "1.1.1.1"
+# --- THE INVESTIGATION BOARD ---
+# A list of suspicious IPs found in our "logs"
+suspects = [
+    "8.8.8.8",         # Google
+    "1.1.1.1",         # Cloudflare
+    "192.168.1.50",    # Private (Local)
+    "104.21.19.201",   #unknown Web Server 
+    "172.253.120.102"  # Unknown Web Server
+]
 
-print(f"--- Global Trace Initiated ---")
-location = get_location(test_ip)
-print(f"Target IP: {test_ip}")
-print(f"Result: {location}")
-print(f"--- Trace Complete ---")
+print(f"{'IP ADDRESS':<15} | {'LOCATION':<25}")
+print("-" * 45)
+
+for ip in suspects:
+    location = get_location(ip)
+    print(f"{ip:<15} | {location:<25}")
