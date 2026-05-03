@@ -21,7 +21,7 @@ def get_detailed_intel(ip):
         return {"city": "Error", "isp": "Error", "status": "ERROR"}
 
 # --- THE WATCHLIST ---
-suspects = ["8.8.8.8", "1.1.1.1", "104.21.19.201", "172.253.120.102"]
+suspects = ["8.8.8.8", "1.1.1.1", "104.21.19.201", "172.253.120.102","197.200.32.52"]
 
 print(f"{'IP ADDRESS':<15} | {'STATUS':<10} | {'ISP':<20} | {'LOCATION'}")
 print("-" * 70)
